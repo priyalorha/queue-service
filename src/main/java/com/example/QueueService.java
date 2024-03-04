@@ -2,7 +2,7 @@ package com.example;
 
 public interface QueueService {
   /** push a message onto a queue. */
-  public void push(String queueUrl, String messageBody);
+  public void push(String queueUrl, String messageBody, int priority);
 
   /** retrieves a single message from a queue. */
   public Message pull(String queueUrl);

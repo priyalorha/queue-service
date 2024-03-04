@@ -1,6 +1,6 @@
 package com.example;
 
-public class Message {
+public class Message implements  Comparable<Message> {
   /** How many times this message has been delivered. */
   private int attempts;
 
@@ -11,10 +11,15 @@ public class Message {
   private String receiptId;
 
   private String msgBody;
+  private int priority;
 
   Message(String msgBody) {
     this.msgBody = msgBody;
   }
+
+  Message(String msgBody, int priority) {
+    this.msgBody = msgBody;
+    this.priority = priority;}
 
   Message(String msgBody, String receiptId) {
     this.msgBody = msgBody;
@@ -53,4 +58,13 @@ public class Message {
   protected void incrementAttempts() {
     this.attempts++;
   }
+
+  protected int getPriority() { return this.priority; }
+
+  protected void setPriority(int p) { this.priority = p; }
+  @Override
+  public int compareTo(Message o) {
+    return Integer.compare(this.priority, o.getPriority());
+  }
+
 }

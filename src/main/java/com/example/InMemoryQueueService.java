@@ -27,7 +27,7 @@ public class InMemoryQueueService implements QueueService {
   }
 
   @Override
-  public void push(String queueUrl, String msgBody) {
+  public void push(String queueUrl, String msgBody, int i) {
     Queue<Message> queue = queues.get(queueUrl);
     if (queue == null) {
       queue = new ConcurrentLinkedQueue<>();

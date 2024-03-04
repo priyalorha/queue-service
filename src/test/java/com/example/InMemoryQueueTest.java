@@ -20,7 +20,7 @@ public class InMemoryQueueTest {
 	
 	@Test
 	public void testSendMessage(){
-		qs.push(queueUrl, "Good message!");
+		qs.push(queueUrl, "Good message!", 4);
 		Message msg = qs.pull(queueUrl);
 
 		assertNotNull(msg);
@@ -31,7 +31,7 @@ public class InMemoryQueueTest {
 	public void testPullMessage(){
 		String msgBody = "{ \"name\":\"John\", \"age\":30, \"car\":null }";
 		
-		qs.push(queueUrl, msgBody);
+		qs.push(queueUrl, msgBody, 4);
 		Message msg = qs.pull(queueUrl);
 
 		assertEquals(msgBody, msg.getBody());
@@ -46,7 +46,7 @@ public class InMemoryQueueTest {
 	
 	@Test
 	public void testDoublePull(){
-		qs.push(queueUrl, "Message A.");
+		qs.push(queueUrl, "Message A.", 4);
 		qs.pull(queueUrl);
 		Message msg = qs.pull(queueUrl);
 		assertNull(msg);
@@ -56,7 +56,7 @@ public class InMemoryQueueTest {
 	public void testDeleteMessage(){
 		String msgBody = "{ \"name\":\"John\", \"age\":30, \"car\":null }";
 		
-		qs.push(queueUrl, msgBody);
+		qs.push(queueUrl, msgBody, 4);
 		Message msg = qs.pull(queueUrl);
 
 		qs.delete(queueUrl, msg.getReceiptId());
@@ -77,9 +77,9 @@ public class InMemoryQueueTest {
 				"        \"car3\":\"Fiat\"\n" + 
 				"    }\n" + 
 				" }"};
-		qs.push(queueUrl, msgStrs[0]);
-		qs.push(queueUrl, msgStrs[1]);
-		qs.push(queueUrl, msgStrs[2]);
+		qs.push(queueUrl, msgStrs[0], 4);
+		qs.push(queueUrl, msgStrs[1], 4);
+		qs.push(queueUrl, msgStrs[2], 4);
 		Message msg1 = qs.pull(queueUrl);
 		Message msg2 = qs.pull(queueUrl);
 		Message msg3 = qs.pull(queueUrl);
@@ -96,7 +96,7 @@ public class InMemoryQueueTest {
 			}
 		};
 		
-		queueService.push(queueUrl, "Message A.");
+		queueService.push(queueUrl, "Message A.", 4);
 		queueService.pull(queueUrl);
 		Message msg = queueService.pull(queueUrl);
 		assertTrue(msg != null && msg.getBody() == "Message A.");
