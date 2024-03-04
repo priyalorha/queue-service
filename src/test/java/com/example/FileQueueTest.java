@@ -18,7 +18,7 @@ public class FileQueueTest {
 	
 	@Test
 	public void testSendMessage(){
-		qs.push(queueUrl, "Good message!");
+		qs.push(queueUrl, "Good message!", 4);
 		Message msg = qs.pull(queueUrl);
 
 		assertTrue(msg != null && msg.getBody().equals("Good message!"));
@@ -28,7 +28,7 @@ public class FileQueueTest {
 	public void testPullMessage(){
 		String msgBody = "{\"name\":\"John\",\"age\":30,\"cars\": {\"car1\":\"Ford\",\"car2\":\"BMW\"}}";
 	 	
-		qs.push(queueUrl, msgBody);
+		qs.push(queueUrl, msgBody, 4);
 		Message msg = qs.pull(queueUrl);
 
 		assertEquals(msgBody, msg.getBody());
@@ -43,7 +43,7 @@ public class FileQueueTest {
 	
 	@Test
 	public void testDoublePull(){
-		qs.push(queueUrl, "Message A.");
+		qs.push(queueUrl, "Message A.", 4);
 		qs.pull(queueUrl);
 		Message msg = qs.pull(queueUrl);
 		assertNull(msg);
@@ -53,7 +53,7 @@ public class FileQueueTest {
 	public void testDeleteMessage(){
 		String msgBody = "Message A.";
 		
-		qs.push(queueUrl, msgBody);
+		qs.push(queueUrl, msgBody, 4);
 		Message msg = qs.pull(queueUrl);
 
 		qs.delete(queueUrl, msg.getReceiptId());
@@ -65,9 +65,9 @@ public class FileQueueTest {
 	@Test
 	public void testFIFO3Msgs(){
 		String [] msgStrs = {"TEst msg 1", "test msg 2", "Test Message 3."};
-		qs.push(queueUrl, msgStrs[0]);
-		qs.push(queueUrl, msgStrs[1]);
-		qs.push(queueUrl, msgStrs[2]);
+		qs.push(queueUrl, msgStrs[0], 4);
+		qs.push(queueUrl, msgStrs[1], 4);
+		qs.push(queueUrl, msgStrs[2], 4);
 		Message msg1 = qs.pull(queueUrl);
 		Message msg2 = qs.pull(queueUrl);
 		Message msg3 = qs.pull(queueUrl);
@@ -83,7 +83,7 @@ public class FileQueueTest {
 	public void testAckTimeout(){
 		FileQueueService queueService = new FileQueueService();
 
-		queueService.push(queueUrl, "Message A.");
+		queueService.push(queueUrl, "Message A.", 4);
 		queueService.pull(queueUrl);
 		queueService.setTimeSupplier(() -> System.currentTimeMillis() + 1000 * 30 + 1);
 		

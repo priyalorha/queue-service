@@ -63,7 +63,7 @@ public class FileQueueService implements QueueService {
   }
 
   @Override
-  public void push(String queueUrl, String messageBody) {
+  public void push(String queueUrl, String messageBody, int i) {
     String queueName = fromUrl(queueUrl);
     File messages = getMessagesFile(queueName);
     File lock = getLockFile(queueName);

@@ -16,7 +16,7 @@ public class SqsQueueService implements QueueService {
   }
 
   @Override
-  public void push(String queueUrl, String messageBody) {
+  public void push(String queueUrl, String messageBody, int i) {
     sqs.sendMessage(queueUrl, messageBody);
   }
 
