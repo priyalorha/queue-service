@@ -4,24 +4,14 @@ import redis.clients.jedis.Jedis;
 
 public class RedisQueue {
 
-    private static final String QUEUE_NAME = "myQueue";
+
     private static Jedis jedis;
     private static int count =0;
 
     // Initialize the Redis connection in a static block
     static {
-
-
-        String redisHost = "host";
-        int redisPort = 41210;
-        String redisPassword = "password";
-
-        Jedis jedis = new Jedis(redisHost, 41210, true);
-        jedis.auth(redisPassword);
-
-//        // Establish the Redis connection
-//        jedis = new Jedis(redisHost, redisPort, true);
-//        System.out.println(jedis.auth(redisPassword).toString());
+        jedis = new Jedis("us1-alive-wildcat-41210.upstash.io", 41210, true);
+        System.out.println( jedis.auth("password"));
     }
 
 

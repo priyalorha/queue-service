@@ -47,6 +47,8 @@ public class RedisPriorityQueue {
     }
 
     public static void main(String[] args) {
+
+
         RedisPriorityQueue queue = new RedisPriorityQueue("us1-alive-wildcat-41210.upstash.io", 41210, "password", "MY_QUEUE");
 
         // Enqueue some items with priorities
